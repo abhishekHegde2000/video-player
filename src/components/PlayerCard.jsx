@@ -17,22 +17,17 @@ function PlayerCard({ title, description, sources }) {
   return (
     <HoverCard>
       <HoverCardTrigger>
-        <CardContent className="m-0 p-0">
-          <div className="bg-purple-500 m-0">
-            <div className="bg-blue-500 flex flex-col">
-              <Card className="bg-red-500 flex flex-col">
-                <CardHeader>
-                  <CardTitle className="text-bold text-sm">{title}</CardTitle>
-                </CardHeader>
-                <video className="w-full h-48 object-cover" controls>
-                  <source src={sources[0]} type="video/mp4" />
-                </video>
-
-                <CardFooter className="line-clamp-1 ">{description}</CardFooter>
-              </Card>
-            </div>
-          </div>
-        </CardContent>
+        <Card className="bg-red-500 flex flex-col">
+          <CardHeader>
+            <CardTitle className="text-bold text-sm">{title}</CardTitle>
+          </CardHeader>
+          <CardContent className="m-0 p-0">
+            <video className="w-full h-48 object-cover" controls>
+              <source src={sources[0]} type="video/mp4" />
+            </video>
+          </CardContent>
+          <CardFooter className="line-clamp-1 ">{description}</CardFooter>
+        </Card>
       </HoverCardTrigger>
       <HoverCardContent>
         <CardDescription>{description}</CardDescription>

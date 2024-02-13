@@ -3,14 +3,17 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { ChakraProvider } from "@chakra-ui/react";
+import { ThemeProvider } from "@/components/theme-provider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ChakraProvider>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        {/* Add more routes as needed */}
-      </Routes>
-    </Router>
-  </ChakraProvider>
+  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ChakraProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<App />} />
+          {/* Add more routes as needed */}
+        </Routes>
+      </Router>
+    </ChakraProvider>
+  </ThemeProvider>
 );

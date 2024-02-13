@@ -16,26 +16,29 @@ import {
 function PlayerCard({ title, description, sources }) {
   return (
     <HoverCard>
-      <div className="bg-purple-500">
-        <HoverCardTrigger>
-          <div className="bg-blue-500 flex flex-col">
-            <Card className="bg-red-500 flex flex-col">
-              <CardHeader>
-                <CardTitle className="text-bold">{title}</CardTitle>
-              </CardHeader>
-              <video controls>
-                <source src={sources[0]} type="video/mp4" />
-              </video>
-            </Card>
+      <HoverCardTrigger>
+        <CardContent className="m-0 p-0">
+          <div className="bg-purple-500 m-0">
+            <div className="bg-blue-500 flex flex-col">
+              <Card className="bg-red-500 flex flex-col">
+                <CardHeader>
+                  <CardTitle className="text-bold text-sm">{title}</CardTitle>
+                </CardHeader>
+                <video className="w-full h-48 object-cover" controls>
+                  <source src={sources[0]} type="video/mp4" />
+                </video>
+
+                <CardFooter className="line-clamp-1 ">{description}</CardFooter>
+              </Card>
+            </div>
           </div>
-        </HoverCardTrigger>
-        <HoverCardContent>
-          <CardContent className="flex-grow">
-            <CardDescription>{description}</CardDescription>
-          </CardContent>
-        </HoverCardContent>
-      </div>
+        </CardContent>
+      </HoverCardTrigger>
+      <HoverCardContent>
+        <CardDescription>{description}</CardDescription>
+      </HoverCardContent>
     </HoverCard>
   );
 }
+
 export default PlayerCard;

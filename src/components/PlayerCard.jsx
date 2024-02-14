@@ -17,7 +17,7 @@ function PlayerCard({ title, description, sources }) {
   return (
     <HoverCard>
       <HoverCardTrigger>
-        <Card className=" flex flex-col">
+        <Card className="bg-red-500 flex flex-col">
           <CardHeader>
             <CardTitle className="text-bold text-sm">{title}</CardTitle>
           </CardHeader>

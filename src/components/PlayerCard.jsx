@@ -22,7 +22,7 @@ function PlayerCard({ title, description, sources }) {
             <CardTitle className="text-bold text-sm">{title}</CardTitle>
           </CardHeader>
           <CardContent className="m-0 p-0">
-            <video className="w-full h-48 object-cover" controls>
+            <video className="w-auto h-auto object-cover" controls>
               <source src={sources[0]} type="video/mp4" />
             </video>
           </CardContent>

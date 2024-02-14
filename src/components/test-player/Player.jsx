@@ -55,7 +55,7 @@ function Player({ src, autoPlay = false, muted = false }) {
     };
   }, [videoRef.current]);
 
-  const handlePlayPause = () => {
+  const handlePlayPauseClick = () => {
     if (!videoRef.current) return;
     if (videoRef.current.paused) {
       videoRef.current.play();
@@ -72,15 +72,75 @@ function Player({ src, autoPlay = false, muted = false }) {
       pos="relative"
       rounded="10px"
       overflow="hidden"
+      _hover={{
+        ".timeline-container": {
+          opacity: 1,
+        },
+      }}
     >
       {isWaiting && <Spinner pos="absolute" color="white" />}
       <Video
         autoPlay={autoPlay}
         muted={muted}
         src={src}
-        onClick={handlePlayPause}
+        onClick={handlePlayPauseClick}
         ref={videoRef}
       />
+
+      <Flex
+        w="full"
+        z-index="10"
+        h="100px"
+        bg="linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5))"
+        pos="absolute"
+        opacity={1}
+        transition="opacity 0.5s linear"
+        className="timeline-container"
+        left={0}
+        bottom={0}
+        align="flex-end"
+        px="1rem"
+      >
+        <Flex flexDir="column" w="full" align="center">
+          {/* {timeline} */}
+          <Flex
+            w="full"
+            transition="height 0.1s linear"
+            className="timeline"
+            h="4px"
+            mb="0.5rem"
+            rounded="10px"
+            bg="rgba(193, 193, 193, 0.5)"
+            _hover={{ height: "5px" }}
+            overflow="hidden"
+            // onClick={(e) => {
+            //   const { left, width } = e.currentTarget.getBoundingClientRect();
+            //   const clickedPos = (e.clientX - left) / width;
+            //   seekToPosition(clickedPos);
+            // }}
+          >
+            {/* {} */}
+            <Flex pos="relative" w="full" h="full">
+              {/* {playback prohress} */}
+              <Flex
+                h="full"
+                className="play-progress"
+                bg="#0CAADC"
+                zIndex={1}
+                ref={progressRef}
+              />
+              {/* {buffer progress} */}
+              <Flex
+                pos="absolute"
+                h="full"
+                className="buffer-progress"
+                bg="#FDFFFC"
+                ref={bufferRef}
+              />
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
     </Flex>
   );
 }

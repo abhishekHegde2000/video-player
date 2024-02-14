@@ -2,7 +2,6 @@ import { Flex, Text } from "@chakra-ui/react";
 import React from "react";
 
 export default function ElapsedTimeTracker(props) {
-  console.log(props);
   const elapsedMin = Math.floor(props.elapsedSec / 60);
   const elapsedSec = Math.floor(props.elapsedSec % 60);
 

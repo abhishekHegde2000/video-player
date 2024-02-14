@@ -6,13 +6,13 @@ function App() {
   return (
     <div className="">
       <ProductList />
-      <Player
+      {/* <Player
         src={
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
         }
         autoplay={true}
         muted={false}
-      />
+      /> */}
     </div>
   );
 }

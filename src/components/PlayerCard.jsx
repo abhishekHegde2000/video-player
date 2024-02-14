@@ -12,27 +12,35 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { useState } from "react";
 
-function PlayerCard({ title, description, sources }) {
+function PlayerCard({ title, description, sources, handleVideoClick }) {
   return (
-    <HoverCard>
-      <HoverCardTrigger>
-        <Card className="bg-red-500 flex flex-col">
-          <CardHeader>
-            <CardTitle className="text-bold text-sm">{title}</CardTitle>
-          </CardHeader>
-          <CardContent className="m-0 p-0">
-            <video className="w-auto h-auto object-cover" controls>
-              <source src={sources[0]} type="video/mp4" />
-            </video>
-          </CardContent>
-          <CardFooter className="line-clamp-1 ">{description}</CardFooter>
-        </Card>
-      </HoverCardTrigger>
-      <HoverCardContent>
-        <CardDescription>{description}</CardDescription>
-      </HoverCardContent>
-    </HoverCard>
+    <div
+      onClick={() => handleVideoClick(sources[0])}
+      className="cursor-pointer"
+    >
+      <HoverCard>
+        <HoverCardTrigger>
+          <Card className="bg-red-500 flex flex-col">
+            <CardHeader>
+              <CardTitle className="text-bold text-sm">{title}</CardTitle>
+            </CardHeader>
+            <CardContent className="m-0 p-0">
+              <video
+                src={sources[0]}
+                className="w-full h-48 object-cover"
+                controls
+              ></video>
+            </CardContent>
+            <CardFooter className="line-clamp-1 ">{description}</CardFooter>
+          </Card>
+        </HoverCardTrigger>
+        <HoverCardContent>
+          <CardDescription>{description}</CardDescription>
+        </HoverCardContent>
+      </HoverCard>
+    </div>
   );
 }
 

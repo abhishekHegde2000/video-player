@@ -1,7 +1,10 @@
-import { Spinner } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Button, Flex, Spinner } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import React, { useEffect, useRef, useState } from "react";
+import PlayIcon from "./PlayIcon";
+import PauseIcon from "./PauseIcon";
+import ElapsedTimeTracker from "./ElapsedTimeTracker";
+import PlaybackRate from "./PlaybackRate";
 
 const Video = styled.video`
   flex-shrink: 1;
@@ -10,7 +13,8 @@ const Video = styled.video`
   border-radius: 10px;
 `;
 
-function Player({ src, autoPlay = false, muted = false }) {
+const Player = (props) => {
+  const { src, autoPlay, muted } = props;
   const [isWaiting, setIsWaiting] = useState(false);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [playbackRate, setPlaybackRate] = useState(1);
@@ -21,12 +25,10 @@ function Player({ src, autoPlay = false, muted = false }) {
   const progressRef = useRef(null);
   const bufferRef = useRef(null);
 
-  console.log(videoRef.current);
-
   useEffect(() => {
-    if (!videoRef.current) return;
-
-    const element = videoRef.current;
+    if (!videoRef.current) {
+      return;
+    }
 
     const onWaiting = () => {
       if (isPlaying) setIsPlaying(false);
@@ -43,26 +45,77 @@ function Player({ src, autoPlay = false, muted = false }) {
       setIsWaiting(false);
     };
 
+    const element = videoRef.current;
+
+    const onProgress = () => {
+      if (!element.buffered || !bufferRef.current) return;
+      if (!element.buffered.length) return;
+      const bufferedEnd = element.buffered.end(element.buffered.length - 1);
+      const duration = element.duration;
+      if (bufferRef && duration > 0) {
+        bufferRef.current.style.width = (bufferedEnd / duration) * 100 + "%";
+      }
+    };
+
+    const onTimeUpdate = () => {
+      setIsWaiting(false);
+      if (!element.buffered || !progressRef.current) return;
+      const duration = element.duration;
+      setDurationSec(duration);
+      setElapsedSec(element.currentTime);
+      if (progressRef && duration > 0) {
+        progressRef.current.style.width =
+          (element.currentTime / duration) * 100 + "%";
+      }
+    };
+
+    element.addEventListener("progress", onProgress);
+    element.addEventListener("timeupdate", onTimeUpdate);
+
+    element.addEventListener("waiting", onWaiting);
     element.addEventListener("play", onPlay);
     element.addEventListener("playing", onPlay);
     element.addEventListener("pause", onPause);
-    element.addEventListener("waiting", onWaiting);
-    setIsWaiting(true);
-    // clear once unmounted
+
+    // clean up
     return () => {
+      element.removeEventListener("waiting", onWaiting);
       element.removeEventListener("play", onPlay);
       element.removeEventListener("playing", onPlay);
+      element.removeEventListener("pause", onPause);
+      element.removeEventListener("progress", onProgress);
+      element.removeEventListener("timeupdate", onTimeUpdate);
     };
   }, [videoRef.current]);
 
-  const handlePlayPauseClick = () => {
+  // This is where the playback rate is set on the video element.
+  useEffect(() => {
     if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-    } else {
-      videoRef.current.pause();
+    if (videoRef.current.playbackRate === playbackRate) return;
+    videoRef.current.playbackRate = playbackRate;
+  }, [playbackRate]);
+
+  const handlePlayPauseClick = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
     }
   };
+
+  const seekToPosition = (pos) => {
+    if (!videoRef.current) return;
+    if (pos < 0 || pos > 1) return;
+
+    const durationMs = videoRef.current.duration * 1000 || 0;
+
+    const newElapsedMs = durationMs * pos;
+    const newTimeSec = newElapsedMs / 1000;
+    videoRef.current.currentTime = newTimeSec;
+  };
+
   return (
     <Flex
       flexDir="column"
@@ -86,14 +139,12 @@ function Player({ src, autoPlay = false, muted = false }) {
         onClick={handlePlayPauseClick}
         ref={videoRef}
       />
-
       <Flex
         w="full"
-        z-index="10"
         h="100px"
         bg="linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5))"
         pos="absolute"
-        opacity={1}
+        opacity={0}
         transition="opacity 0.5s linear"
         className="timeline-container"
         left={0}
@@ -102,7 +153,6 @@ function Player({ src, autoPlay = false, muted = false }) {
         px="1rem"
       >
         <Flex flexDir="column" w="full" align="center">
-          {/* {timeline} */}
           <Flex
             w="full"
             transition="height 0.1s linear"
@@ -113,15 +163,13 @@ function Player({ src, autoPlay = false, muted = false }) {
             bg="rgba(193, 193, 193, 0.5)"
             _hover={{ height: "5px" }}
             overflow="hidden"
-            // onClick={(e) => {
-            //   const { left, width } = e.currentTarget.getBoundingClientRect();
-            //   const clickedPos = (e.clientX - left) / width;
-            //   seekToPosition(clickedPos);
-            // }}
+            onClick={(e) => {
+              const { left, width } = e.currentTarget.getBoundingClientRect();
+              const clickedPos = (e.clientX - left) / width;
+              seekToPosition(clickedPos);
+            }}
           >
-            {/* {} */}
             <Flex pos="relative" w="full" h="full">
-              {/* {playback prohress} */}
               <Flex
                 h="full"
                 className="play-progress"
@@ -129,7 +177,6 @@ function Player({ src, autoPlay = false, muted = false }) {
                 zIndex={1}
                 ref={progressRef}
               />
-              {/* {buffer progress} */}
               <Flex
                 pos="absolute"
                 h="full"
@@ -139,10 +186,43 @@ function Player({ src, autoPlay = false, muted = false }) {
               />
             </Flex>
           </Flex>
+          <Flex w="full" justify="space-between" align="center">
+            <Flex align="center">
+              <Button
+                maxW="25px"
+                minW="25px"
+                w="25px"
+                p="0"
+                mr="0.4rem"
+                maxH="25px"
+                h="25px"
+                rounded="4px"
+                colorScheme="transparent"
+                bg="transparent"
+                mb="0.5rem"
+                _hover={{
+                  bg: "rgba(0, 0, 0, 0.4)",
+                }}
+                onClick={handlePlayPauseClick}
+              >
+                {!isPlaying ? <PlayIcon /> : <PauseIcon />}
+              </Button>
+
+              <ElapsedTimeTracker
+                totalSec={durationSec}
+                elapsedSec={elapsedSec}
+              />
+            </Flex>
+
+            <PlaybackRate
+              playbackRate={playbackRate}
+              setPlaybackRate={setPlaybackRate}
+            />
+          </Flex>
         </Flex>
       </Flex>
     </Flex>
   );
-}
+};
 
 export default Player;

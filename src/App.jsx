@@ -5,13 +5,13 @@ import Player from "./components/test-player/Player";
 function App() {
   return (
     <div className="">
-      {/* <ProductList /> */}
+      <ProductList />
       <Player
         src={
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
         }
         autoplay={true}
-        muted={true}
+        muted={false}
       />
     </div>
   );

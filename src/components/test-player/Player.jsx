@@ -18,8 +18,8 @@ const Player = (props) => {
   const [isWaiting, setIsWaiting] = useState(false);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [playbackRate, setPlaybackRate] = useState(1);
-  const [durationSec, setDurationSec] = useState(1);
-  const [elapsedSec, setElapsedSec] = useState(1);
+  const [durationSec, setDurationSec] = useState(null);
+  const [elapsedSec, setElapsedSec] = useState(null);
 
   const videoRef = useRef(null);
   const progressRef = useRef(null);
@@ -50,6 +50,7 @@ const Player = (props) => {
     const onProgress = () => {
       if (!element.buffered || !bufferRef.current) return;
       if (!element.buffered.length) return;
+
       const bufferedEnd = element.buffered.end(element.buffered.length - 1);
       const duration = element.duration;
       if (bufferRef && duration > 0) {

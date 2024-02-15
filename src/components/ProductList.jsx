@@ -10,10 +10,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ModeToggle } from "./mode-toggle.jsx";
+import Player from "./test-player/Player.jsx";
+import { Link } from "react-router-dom";
 
 export default function ProductList() {
   const [videos, setVideos] = useState(videoList);
-  console.log(videos); // logs the video list to the console
+
   return (
     <Card className="m-2 p-2 px-6">
       <CardContent className="flex justify-between items-center p-4 ">
@@ -24,12 +26,17 @@ export default function ProductList() {
 
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {videos.map((video) => (
-          <PlayerCard
+          <Link
+            to={`/video/${video.sources[0].split("/").pop()}`}
             key={video.title}
-            title={video.title}
-            description={video.description}
-            sources={video.sources}
-          />
+          >
+            <PlayerCard
+              key={video.title}
+              title={video.title}
+              description={video.description}
+              sources={video.sources}
+            />
+          </Link>
         ))}
       </div>
       <CardFooter className="text-sm justify-between flex m-2 p-2 px-6">

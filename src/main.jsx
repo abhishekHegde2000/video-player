@@ -4,6 +4,8 @@ import App from "./App.jsx";
 import "./index.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ThemeProvider } from "@/components/theme-provider";
+import Video from "./components/pages/Video.jsx";
+import NotFound from "./components/pages/import React from 'react';.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -11,7 +13,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Router>
         <Routes>
           <Route path="/" element={<App />} />
-          {/* Add more routes as needed */}
+          <Route path="/video/:name" element={<Video />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </ChakraProvider>

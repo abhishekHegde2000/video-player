@@ -12,9 +12,12 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { useState } from "react";
 
-function PlayerCard({ title, description, sources }) {
+function PlayerCard({ title, description, sources, handleVideoClick }) {
   return (
+
+
     <HoverCard>
       <HoverCardTrigger>
         <Card className="bg-red-500 flex flex-col">

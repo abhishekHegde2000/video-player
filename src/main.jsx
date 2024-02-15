@@ -5,7 +5,7 @@ import "./index.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ThemeProvider } from "@/components/theme-provider";
 import Video from "./components/pages/Video.jsx";
-import NotFound from "./components/pages/import React from 'react';.jsx";
+import NotFound from "./components/pages/NotFound.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">

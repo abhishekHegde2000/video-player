@@ -36,7 +36,6 @@ function PlayerCard({ title, description, sources, handleVideoClick }) {
         <CardDescription>{description}</CardDescription>
       </HoverCardContent>
     </HoverCard>
-main
   );
 }
 

@@ -27,7 +27,10 @@ export default function ProductList() {
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {videos.map((video) => (
           <Link
-            to={`/video/${video.sources[0].split("/").pop()}`}
+            to={{
+              pathname: `/video/${video.sources[0].split("/").pop()}`,
+              state: { description: video.description },
+            }}
             key={video.title}
           >
             <PlayerCard
@@ -41,7 +44,7 @@ export default function ProductList() {
       </div>
       <CardFooter className="text-sm justify-between flex m-2 p-2 px-6">
         <p className="text-sm justify-center flex">By Abhi</p>
-        {/* i want to render current year at the right bottom */}
+
         <p className="text-sm justify-center flex">
           {new Date().getFullYear()}
         </p>

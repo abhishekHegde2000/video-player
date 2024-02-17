@@ -26,6 +26,10 @@ const Player = (props) => {
   const bufferRef = useRef(null);
 
   useEffect(() => {
+    console.log("src changed", src);
+  }, [src]);
+
+  useEffect(() => {
     if (!videoRef.current) {
       return;
     }
@@ -46,7 +50,7 @@ const Player = (props) => {
     };
 
     const element = videoRef.current;
-
+    console.log("element", element);
     const onProgress = () => {
       if (!element.buffered || !bufferRef.current) return;
       if (!element.buffered.length) return;
@@ -118,111 +122,113 @@ const Player = (props) => {
   };
 
   return (
-    <Flex
-      flexDir="column"
-      cursor="pointer"
-      align="center"
-      justify="center"
-      pos="relative"
-      rounded="10px"
-      overflow="hidden"
-      _hover={{
-        ".timeline-container": {
-          opacity: 1,
-        },
-      }}
-    >
-      {isWaiting && <Spinner pos="absolute" color="white" />}
-      <Video
-        autoPlay={autoPlay}
-        muted={muted}
-        src={src}
-        onClick={handlePlayPauseClick}
-        ref={videoRef}
-      />
+    <div className="flex justify-center items-center">
       <Flex
-        w="full"
-        h="100px"
-        bg="linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5))"
-        pos="absolute"
-        opacity={0}
-        transition="opacity 0.5s linear"
-        className="timeline-container"
-        left={0}
-        bottom={0}
-        align="flex-end"
-        px="1rem"
+        flexDir="column"
+        cursor="pointer"
+        align="center"
+        justify="center"
+        pos="relative"
+        rounded="10px"
+        overflow="hidden"
+        _hover={{
+          ".timeline-container": {
+            opacity: 1,
+          },
+        }}
       >
-        <Flex flexDir="column" w="full" align="center">
-          <Flex
-            w="full"
-            transition="height 0.1s linear"
-            className="timeline"
-            h="4px"
-            mb="0.5rem"
-            rounded="10px"
-            bg="rgba(193, 193, 193, 0.5)"
-            _hover={{ height: "5px" }}
-            overflow="hidden"
-            onClick={(e) => {
-              const { left, width } = e.currentTarget.getBoundingClientRect();
-              const clickedPos = (e.clientX - left) / width;
-              seekToPosition(clickedPos);
-            }}
-          >
-            <Flex pos="relative" w="full" h="full">
-              <Flex
-                h="full"
-                className="play-progress"
-                bg="#0CAADC"
-                zIndex={1}
-                ref={progressRef}
-              />
-              <Flex
-                pos="absolute"
-                h="full"
-                className="buffer-progress"
-                bg="#FDFFFC"
-                ref={bufferRef}
+        {isWaiting && <Spinner pos="absolute" color="white" />}
+        <Video
+          autoPlay={autoPlay}
+          muted={muted}
+          src={src}
+          onClick={handlePlayPauseClick}
+          ref={videoRef}
+        />
+        <Flex
+          w="full"
+          h="100px"
+          bg="linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5))"
+          pos="absolute"
+          opacity={0}
+          transition="opacity 0.5s linear"
+          className="timeline-container"
+          left={0}
+          bottom={0}
+          align="flex-end"
+          px="1rem"
+        >
+          <Flex flexDir="column" w="full" align="center">
+            <Flex
+              w="full"
+              transition="height 0.1s linear"
+              className="timeline"
+              h="4px"
+              mb="0.5rem"
+              rounded="10px"
+              bg="rgba(193, 193, 193, 0.5)"
+              _hover={{ height: "5px" }}
+              overflow="hidden"
+              onClick={(e) => {
+                const { left, width } = e.currentTarget.getBoundingClientRect();
+                const clickedPos = (e.clientX - left) / width;
+                seekToPosition(clickedPos);
+              }}
+            >
+              <Flex pos="relative" w="full" h="full">
+                <Flex
+                  h="full"
+                  className="play-progress"
+                  bg="#0CAADC"
+                  zIndex={1}
+                  ref={progressRef}
+                />
+                <Flex
+                  pos="absolute"
+                  h="full"
+                  className="buffer-progress"
+                  bg="#FDFFFC"
+                  ref={bufferRef}
+                />
+              </Flex>
+            </Flex>
+            <Flex w="full" justify="space-between" align="center">
+              <Flex align="center">
+                <Button
+                  maxW="25px"
+                  minW="25px"
+                  w="25px"
+                  p="0"
+                  mr="0.4rem"
+                  maxH="25px"
+                  h="25px"
+                  rounded="4px"
+                  colorScheme="transparent"
+                  bg="transparent"
+                  mb="0.5rem"
+                  _hover={{
+                    bg: "rgba(0, 0, 0, 0.4)",
+                  }}
+                  onClick={handlePlayPauseClick}
+                >
+                  {!isPlaying ? <PlayIcon /> : <PauseIcon />}
+                </Button>
+
+                <ElapsedTimeTracker
+                  totalSec={durationSec}
+                  elapsedSec={elapsedSec}
+                />
+              </Flex>
+
+              <PlaybackRate
+                playbackRate={playbackRate}
+                setPlaybackRate={setPlaybackRate}
               />
             </Flex>
-          </Flex>
-          <Flex w="full" justify="space-between" align="center">
-            <Flex align="center">
-              <Button
-                maxW="25px"
-                minW="25px"
-                w="25px"
-                p="0"
-                mr="0.4rem"
-                maxH="25px"
-                h="25px"
-                rounded="4px"
-                colorScheme="transparent"
-                bg="transparent"
-                mb="0.5rem"
-                _hover={{
-                  bg: "rgba(0, 0, 0, 0.4)",
-                }}
-                onClick={handlePlayPauseClick}
-              >
-                {!isPlaying ? <PlayIcon /> : <PauseIcon />}
-              </Button>
-
-              <ElapsedTimeTracker
-                totalSec={durationSec}
-                elapsedSec={elapsedSec}
-              />
-            </Flex>
-
-            <PlaybackRate
-              playbackRate={playbackRate}
-              setPlaybackRate={setPlaybackRate}
-            />
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+    </div>
   );
 };
 

@@ -24,10 +24,13 @@ function PlayerCard({ title, description, sources, handleVideoClick }) {
     dispatch(setVideoData({ title, description, src }));
   };
   return (
-    <div onClick={handleVideoClick}>
+    <div
+      onClick={handleVideoClick}
+      className="cursor-pointer transform hover:scale-105 transition-transform duration-300 ease-in-out"
+    >
       <HoverCard>
         <HoverCardTrigger>
-          <Card className="bg-red-500 flex flex-col">
+          <Card className="bg-red-500 flex flex-col transition-all duration-500 ease-in-out hover:shadow-2xl">
             <CardHeader>
               <CardTitle className="text-bold text-sm">{title}</CardTitle>
             </CardHeader>

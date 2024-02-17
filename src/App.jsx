@@ -1,6 +1,6 @@
 import "./App.css";
 import ProductList from "./components/ProductList";
-import Player from "./components/test-player/Player";
+import Player from "./test-player/Player";
 
 function App() {
   return (

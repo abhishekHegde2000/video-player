@@ -3,7 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import videosList from "@/lib/list";
 import { Link } from "react-router-dom";
-import PlayerCard from "../PlayerCard";
+import PlayerCard from "../components/PlayerCard";
 
 export default function PlayList() {
   const [videos] = useState(videosList);
@@ -21,7 +21,7 @@ export default function PlayList() {
                 description={video.description}
                 sources={video.sources}
               />
-              <Separator />
+              <Separator className="m-1 " />
             </Link>
           ))}
         </ScrollArea>

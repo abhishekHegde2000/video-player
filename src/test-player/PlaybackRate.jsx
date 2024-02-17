@@ -10,52 +10,54 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const PlaybackRateControlButton = React.forwardRef(
-  function PlaybackRateControlButton({ onClick, playbackRate }, ref) {
-    return (
-      <div ref={ref}>
-        <Flex
-          className="playback-rate-control"
-          alignItems="center"
-          cursor="pointer"
-          h="40px"
-          justifyContent="center"
-          rounded="12px"
-          w="40px"
-          _hover={{
-            bg: "rgba(255, 255, 255, 0.08)",
-          }}
-          onClick={onClick}
-          mt="-8px"
-          transition="500ms opacity"
-        >
-          <Text
-            color="white"
-            fontWeight={700}
-            letterSpacing="0.5px"
-            pos="relative"
-            top="-1px"
-          >
-            <span style={{ fontSize: "14px" }}>{playbackRate}</span>
-            <span style={{ fontSize: "11px" }}>x</span>
-            <ChevronDownIcon
-              bottom="-1px"
-              color="white"
-              marginLeft="-1px"
-              marginRight="-4px"
-              opacity="0.5"
-              pos="relative"
-              width="12px"
-              stroke="white"
-            />
-          </Text>
-        </Flex>
-      </div>
-    );
-  }
-);
+const PlaybackRateControlButton = React.forwardRef((props, ref) => {
+  const { onClick, playbackRate } = props;
 
-function PlaybackRateControl({ playbackRate, setPlaybackRate }) {
+  return (
+    <div ref={ref}>
+      <Flex
+        className="playback-rate-control"
+        alignItems="center"
+        cursor="pointer"
+        h="40px"
+        justifyContent="center"
+        rounded="12px"
+        w="40px"
+        _hover={{
+          bg: "rgba(255, 255, 255, 0.08)",
+        }}
+        onClick={onClick}
+        mt="-8px"
+        transition="500ms opacity"
+      >
+        <Text
+          color="white"
+          fontWeight={700}
+          letterSpacing="0.5px"
+          pos="relative"
+          top="-1px"
+        >
+          <span style={{ fontSize: "14px" }}>{playbackRate}</span>
+          <span style={{ fontSize: "11px" }}>x</span>
+          <ChevronDownIcon
+            bottom="-1px"
+            color="white"
+            marginLeft="-1px"
+            marginRight="-4px"
+            opacity="0.5"
+            pos="relative"
+            width="12px"
+            stroke="white"
+          />
+        </Text>
+      </Flex>
+    </div>
+  );
+});
+
+function PlaybackRateControl(props) {
+  const { playbackRate, setPlaybackRate } = props;
+
   return (
     <Menu autoSelect={false} placement="top-start">
       <MenuButton as={PlaybackRateControlButton} playbackRate={playbackRate} />
@@ -88,14 +90,14 @@ function PlaybackRateControl({ playbackRate, setPlaybackRate }) {
                 bg: "rgba(0, 0, 0, 0.4)",
               }}
               _focus={{
-                bg: "rgba(0, 0, 0, 0.4)",
+                bg: "lightblue",
               }}
             >
-              <Text fontWeight={600} size="md" color="Black">
+              <Text fontWeight={800} size="sm" color="black">
                 {rate.toFixed(1)}x
               </Text>
               {playbackRate === rate && (
-                <CheckIcon width="15px" height="11px" fill="black" />
+                <CheckIcon width="15px" height="11px" fill="white" />
               )}
             </MenuItem>
           ))}

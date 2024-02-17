@@ -42,8 +42,8 @@ function PlayerCard({ title, description, sources, handleVideoClick }) {
             <CardFooter className="line-clamp-1 ">{description}</CardFooter>
           </Card>
         </HoverCardTrigger>
-        <HoverCardContent>
-          <CardDescription>{description}</CardDescription>
+        <HoverCardContent className="z-50">
+          <CardDescription className="z-50">{description}</CardDescription>
         </HoverCardContent>
       </HoverCard>
     </div>

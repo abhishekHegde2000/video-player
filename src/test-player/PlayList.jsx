@@ -21,7 +21,7 @@ export default function PlayList() {
                 description={video.description}
                 sources={video.sources}
               />
-              <Separator className="m-1 " />
+              <Separator className="p-2 " />
             </Link>
           ))}
         </ScrollArea>

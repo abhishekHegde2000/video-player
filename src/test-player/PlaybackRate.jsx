@@ -1,3 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import { CheckIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Flex,

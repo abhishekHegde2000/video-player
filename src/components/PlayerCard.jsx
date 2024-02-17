@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Card,
   CardContent,
@@ -20,7 +21,7 @@ function PlayerCard({ title, description, sources, handleVideoClick }) {
   const src = BASE_URL + sources[0].split("/").pop();
   const dispatch = useDispatch();
 
-  handleVideoClick = (e) => {
+  handleVideoClick = () => {
     dispatch(setVideoData({ title, description, src }));
   };
   return (

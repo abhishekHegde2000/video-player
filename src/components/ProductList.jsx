@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import videoList from "../lib/list.js";
 import PlayerCard from "./PlayerCard.jsx";
 

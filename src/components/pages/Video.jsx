@@ -1,12 +1,10 @@
-import BASE_URL from "@/lib/constant";
-import React from "react";
 import Player from "../../test-player/Player";
 import PlayList from "../../test-player/PlayList";
 import { useSelector } from "react-redux";
 
 import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 
-export default function Video(props) {
+export default function Video() {
   const { title, description, src } = useSelector((state) => state.video);
 
   return (

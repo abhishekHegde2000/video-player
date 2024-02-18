@@ -27,25 +27,25 @@ function PlayerCard({ title, description, sources, handleVideoClick }) {
   return (
     <div
       onClick={handleVideoClick}
-      className="cursor-pointer transform hover:scale-105 transition-transform duration-300 ease-in-out"
+      className="p-2 m-2 cursor-pointer transform hover:scale-105 transition-transform duration-300 ease-in-out"
     >
-      <HoverCard>
+      <HoverCard className="">
         <HoverCardTrigger>
-          <Card className="bg-red-500 flex flex-col transition-all duration-500 ease-in-out hover:shadow-2xl">
+          <Card className="bg-purple-700 flex flex-col transition-all duration-500  ease-in-out hover:shadow-2xl">
             <CardHeader>
               <CardTitle className="text-bold text-sm">{title}</CardTitle>
             </CardHeader>
             <CardContent className="m-0 p-0">
-              <video className="w-full h-48 object-cover" controls>
+              <video className="w-full h-48 object-cover">
                 <source src={sources[0]} type="video/mp4" />
               </video>
             </CardContent>
-            <CardFooter className="line-clamp-1 ">{description}</CardFooter>
+            <CardFooter className="line-clamp-1 m-2">{description}</CardFooter>
           </Card>
         </HoverCardTrigger>
-        <HoverCardContent className="z-50">
-          <CardDescription className="z-50">{description}</CardDescription>
-        </HoverCardContent>
+        {/* <HoverCardContent className="z-50">
+          <CardDescription className="p-4 z-50">{description}</CardDescription>
+        </HoverCardContent> */}
       </HoverCard>
     </div>
   );

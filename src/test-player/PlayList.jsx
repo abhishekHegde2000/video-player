@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function PlayList() {
   const [videos] = useState(videosList);
   return (
-    <div>
+    <div className="m-2">
       <div>
         <ScrollArea className="h-screen">
           {videos.map((video) => (

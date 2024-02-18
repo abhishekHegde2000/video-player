@@ -8,7 +8,7 @@ export default function Video() {
   const { title, description, src } = useSelector((state) => state.video);
 
   return (
-    <div className="grid pt-4 grid-cols-1 md:grid-cols-4 items-center text-center gap-4 h-screen bg-black overflow-clip">
+    <div className="p-8 pb-16 grid pt-4 grid-cols-1 md:grid-cols-4 items-center text-center gap-4 h-screen bg-black overflow-clip">
       <div className="col-span-1 md:col-span-3 h-full">
         <Card className="bg-gray-900 p-8 rounded-lg shadow-lg flex flex-col justify-center transition-all duration-500 ease-in-out hover:shadow-2xl">
           <CardTitle className="text-4xl font-bold mb-4 transition-all duration-500 ease-in-out hover:text-blue-500">
@@ -18,7 +18,7 @@ export default function Video() {
             <Player
               key={src}
               src={src}
-              className=" cursor-pointer bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 hover:scale-105 transition-all duration-500 ease-in-out"
+              className=" cursor-pointer bg-gradient-to-r from-purple-400 via-pink-500 to-blue-400 hover:scale-105 transition-all duration-500 ease-in-out"
             />
           </CardContent>
           <CardDescription className="text-lg transition-all p-8 duration-500 ease-in-out hover:text-blue-500">

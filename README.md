@@ -8,11 +8,12 @@ This project is a video player application built with Vite, React, Redux, and Ta
 To get started with the project, follow these steps:
 
 1. Clone the repository:
+````
 
 ```sh
 git clone <repository-url>
 ```
-````
+
 
 2. Navigate into the project directory:
 
